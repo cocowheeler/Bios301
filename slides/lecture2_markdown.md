@@ -687,6 +687,8 @@ The German Bundestag hosts a repository of all Germany’s rules and regulations
 
 To get some practice using Markdown, complete the Markdown tutorial (`markdown_tutorial.md`) located in the *exercises* folder on the course GitHub repository.
 
+Try building the `r_basics` files in MultiMarkdown and knitr formats located in the *notes* folder.
+
 <!-- Mathjax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
