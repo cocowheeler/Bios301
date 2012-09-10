@@ -37,6 +37,7 @@ Pros of LaTeX:
 - mathematics are easily typeset
 - indexes, footnotes and references are easily generated
 - the author is forced to correctly structure your documents
+- source document is plain
 
 Cons of LaTeX:
 
@@ -104,12 +105,12 @@ Preamble
 
 A lot of packages exist, the most important are:
 
-- amsmath, amssymb and amsthm for mathematical symbols
-- babel for the internationalization of LaTeX
-- fontenc to choose the font encoding of the output text 
-- geometry for easy management of document margins
-- graphicx to manage external pictures
-- inputenc to choose the encoding of the input text
+- `amsmath`, `amssymb` and `amsthm` for mathematical symbols
+- `babel` for the internationalization of LaTeX
+- `fontenc` to choose the font encoding of the output text 
+- `geometry` for easy management of document margins
+- `graphicx` to manage external pictures
+- `inputenc` to choose the encoding of the input text
 
 # Presenter Notes
 
@@ -288,7 +289,7 @@ Font size
 
 \\[{\tiny tiny}\\]
 
-    \begin{footnotesize} footnotesize \end{footnotesize}
+    \begin{small} small \end{small}
 
 \\[{\small small}\\]
 
@@ -495,17 +496,14 @@ Labels and Cross-referencing
 Label:
 
     !latex
-    \begin{figure}[p]
-    \includegraphics[width=\textwidth]{model.pdf}
-    \label{fig:model}
-    \end{figure}
+    \section{Meta-analytic Methods}
+    \label{sec:Meta-analytic Methods}
 
 Reference:
 
     !latex
-    The full model structure is illustrated in Figure~\ref{fig:model}
-    . Note the distinction between the influence of studies with 
-    group-summarized data and that of studies with individual-level
+    The full model structure is described in Section~\ref{sec:Meta-analytic Methods}. Note 
+    the distinction between the influence of studies with group-summarized data and that of 
 
 This is a two-step process: first the compiler stores the labels, then it replaces the `\ref` with the right number. So, multiple compilations are required to see the proper output.
 
@@ -624,6 +622,9 @@ How would you code this table?
 
 # Presenter Notes
 
+2 columns
+justification
+partial line, double line
 
 ---
 
@@ -642,6 +643,7 @@ Exercise
 
 # Presenter Notes
 
+`cline` == column line
 
 ---
 
@@ -660,6 +662,7 @@ Floats *usually* have an associated caption and a label (for cross-referencing).
 
 # Presenter Notes
 
+Allows you to keep a figure/table with text in the original document, but put it in a different place in the output.
 
 ---
 
@@ -706,7 +709,7 @@ Images
 Page Layout
 ===========
 
-hough there are reasonable defaults, LaTeX provides fine-grained control of all aspects of page layout.
+Though there are reasonable defaults, LaTeX provides fine-grained control of all aspects of page layout.
 
 ### Page size
 
@@ -733,9 +736,9 @@ hough there are reasonable defaults, LaTeX provides fine-grained control of all 
 Class and Style Files
 =====================
 
-LaTeX *style* files are used to define special formats and commands.
+LaTeX *style* files (`.sty`) are used to define special formats and commands.
 
-LaTeX *class* files define custom document classes.
+LaTeX *class* files (`.cls`) define custom document classes.
 
 ### Example: Journal formatting
 
@@ -784,6 +787,29 @@ BibTeX Entries
     volume = {6},
     pages = {733--807}
     }
+
+# Presenter Notes
+
+
+---
+
+Bibtex
+======
+
+Bibliography commands are placed at the end of the document, just before `\end{document}`
+
+    !latex
+    \bibliographystyle{spbasic}
+    \bibliography{refs}
+
+Bibtex comes bundled with several bibliography styles, including:
+
+- abbrv
+- plain
+- nature
+- amsplain
+- apa
+- chicago
 
 # Presenter Notes
 
@@ -856,6 +882,28 @@ Editors
 Most programming text editors will have a LaTeX mode.
 
 ![LaTeX mode in SublimeText 2](images/sublime_latex.png)
+
+# Presenter Notes
+
+---
+
+Resources
+=========
+
+[StackExchange (http://tex.stackexchange.com)](http://tex.stackexchange.com)
+
+Simplified Intro to LaTeX (`reference` folder)
+
+Not So Short Introduction to LaTeX (`reference` folder)
+
+# Presenter Notes
+
+---
+
+Exercise: Compile a LaTeX Document
+==================================
+
+In the `exercises` folder on github.com/Bios301, there is a sample LaTeX document, `binomial.tex`. Try compiling this file into a PDF document.
 
 # Presenter Notes
 
