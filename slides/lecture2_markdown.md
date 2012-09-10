@@ -704,5 +704,5 @@ Try building the `r_basics.mmd` file located in the *notes* folder.
   });
 </script>
 <script type="text/javascript"
-    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    src="../MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
