@@ -550,6 +550,10 @@ MultiMarkdown adds multiple output formats.
 
 ![MMD](images/MMD-Map.png)
 
+# Presenter Notes
+
+Plain markdown typically only becomes html.
+
 ---
 
 Using MultiMarkdown
@@ -629,7 +633,7 @@ MMD allows you to turn this:
     Melts in warm places                |       No      |    Yes   |  
     Mistakes can be easily fixed        |      Yes      |    No    |  
     Easy to copy documents for friends  |      Yes      |    No    |  
-    Fun at parties                      |  No | Why not? |  
+    Fun at parties                      |       No      | Why not? |  
 
 ... into this:
 
@@ -687,7 +691,7 @@ The German Bundestag hosts a repository of all Germany’s rules and regulations
 
 To get some practice using Markdown, complete the Markdown tutorial (`markdown_tutorial.md`) located in the *exercises* folder on the course GitHub repository.
 
-Try building the `r_basics` files in MultiMarkdown and knitr formats located in the *notes* folder.
+Try building the `r_basics.mmd` file located in the *notes* folder.
 
 <!-- Mathjax -->
 <script type="text/x-mathjax-config">
