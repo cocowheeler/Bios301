@@ -20,7 +20,8 @@ This results in a static document. Any changes to the analysis forces you back t
 
 Dynamic reports can be updated automatically if data or analysis change.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Report written around the results of analysis
 
@@ -42,7 +43,8 @@ It allows users to combine analytic code and the corresponding documentation int
 
 github.com/yihui/knitr
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -73,7 +75,8 @@ Sweave provides a way of interfacing R code with LaTeX documents.
     \end{Soutput}
     \end{Schunk}
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Around 10 years old.
 
@@ -92,7 +95,8 @@ Literate programming asserts:
 
 An early tool for implementing LP was [noweb][noweb] (Ramasey 1998), upon which Sweave was based.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Knuth is the author/inventor of TeX, among other things
 
@@ -112,7 +116,8 @@ Sweave allows either for the integration of R code and output into a LaTeX file
 ![sweave](images/tangle.png)
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -136,7 +141,8 @@ The `@` delimiter indicates the end of a chunk. Anything beyond this symbol is n
 
 Other than these chunks, the content of the `Rnw` file is just LaTeX.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -160,7 +166,8 @@ From the `knitr` website:
     + R2HTML::RweaveHTML + highlight::HighlightWeaveLatex + 0.2 * brew + 
     + 0.1 * SweaveListingUtils + more
 
-# Presenter Notes
+Presenter Notes
+===============
 
 No reason to use Sweave today.
 
@@ -189,7 +196,8 @@ To extract the source code only:
     !r
     > purl("my_report.rnw")
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -208,7 +216,8 @@ Running `knit` on a report document with the following code chunk:
     @
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -227,7 +236,8 @@ Running `knitr`
 
 ![knitr_plot](http://i.imgur.com/ODApG.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -245,7 +255,8 @@ All option values must be valid R expressions.
 
 Avoid spaces and periods in chunk labels and directory names.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -266,7 +277,8 @@ Chunk Options
 
 Comprehensive list of options at `yihui.name/knitr/options`
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -283,7 +295,8 @@ Chunk options that will apply by default to every chunk in a document can be set
 
 This example will constrain the dimensions of all figures to 5x5.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -302,7 +315,8 @@ We often wish to integrate variables and output from code chunks into sentences 
     The first element of \texttt{x} is -0.2412.
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -327,7 +341,8 @@ Output is to Markdown:
 \\[\text{.rnw} \rightarrow \text{.tex}\\]
 \\[\text{.rmd} \rightarrow \text{.md} (\rightarrow \text{.html})\\]
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -357,5 +372,5 @@ Try building the `r_basics.rmd` file located in the *notes* folder.
   });
 </script>
 <script type="text/javascript"
-    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    src="../MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>

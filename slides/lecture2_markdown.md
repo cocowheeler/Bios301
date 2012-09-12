@@ -17,7 +17,8 @@ The advantages of using Markdown over HTML (and LaTeX):
 
 See [The Markdown Tutorial](http://slekx.com) for more.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -96,7 +97,8 @@ the header tag. So, `#` translates to `<h1>`, `##` translates to
 
 ### This is important information ###
 
-# Presenter Notes
+Presenter Notes
+===============
 
 You may enclose the header by the same 
 number of `#` signs. This is not required, but it does make your plain 
@@ -122,7 +124,8 @@ not supported. The following is an example of an `<h1>` header.
 This info is more important that the last info.
 ===============================================
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Note that you don't have to underline the entire title, one `-` or `=` 
 will suffice. However, underlining all of it makes your plain text 
@@ -181,7 +184,8 @@ indicators of emphasis.
 **bold**, __bold__  
 ***bold-italic***, ___bold-italic___
 
-# Presenter Notes
+Presenter Notes
+===============
 
 you must make sure 
 that the opening and closing character are the same (no mixing and 
@@ -219,7 +223,8 @@ Ordered lists are numbered lists in plain text:
 4. Paul Thompson
 5. Phil Manzanera
 
-# Presenter Notes
+Presenter Notes
+===============
 
 The actual numbers that you use are inconsequential. As long as you 
 start the list with a '1', the resulting HTML will be an ordered list.
@@ -358,7 +363,8 @@ links, they just have a different syntax.
 
 [Biostatistics home page](http://biostat.mc.vanderbilt.edu "Visit Biostat!")
 
-# Presenter Notes
+Presenter Notes
+===============
 
 1. **Link** Text - The text that will appear on the HTML page.
 2. **url** - The url of the link.
@@ -390,7 +396,8 @@ You should read [John Cook's blog post][underflow] on avoiding overflow and unde
 [underflow]: http://bit.ly/T8tSpF 
 "Avoiding Overflow, Underflow, and Loss of Precision"
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Here `underflow` is the local name of the reference.
 One thing to remember about reference links is that the reference id 
@@ -425,7 +432,8 @@ Images look an awful lot like Markdown links, they just have an extra
 
 ![A Histogram](images/histogram.png "Weight by gender")
 
-# Presenter Notes
+Presenter Notes
+===============
 
 You can also use reference urls for images. 
 
@@ -491,7 +499,8 @@ normally-distributed data satisfies:
 
 \\[Pr(\bar{X} - t_{0.025, n-1} S/\sqrt{n} < \mu < \bar{X} - t_{0.025, n-1} S/\sqrt{n}) = 0.95\\]
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -521,7 +530,8 @@ Linking to MathJax is simply a matter of adding some JavaScript to your document
         src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script> 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 A local install is the only approach that does not require a network connection
 
@@ -550,7 +560,8 @@ MultiMarkdown adds multiple output formats.
 
 ![MMD](images/MMD-Map.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Plain markdown typically only becomes html.
 
@@ -574,7 +585,8 @@ MultiMarkdown provides several convenience functions for common conversions:
     mmd2opml file.txt
     mmd2odf file.txt
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -598,7 +610,8 @@ MMD optionally allows users to specify document metadata that can be used to con
 
 The metadata must be placed at the top of the document in *key: value* format, as shown above. It is particularly useful when the target format is pdf via LaTeX.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -618,7 +631,8 @@ Putting a border around a link:
     [Bios301 link]:  http://bit.ly/bios301 class=external
                   style="border: solid black 1px;"
 
-# Presenter Notes
+Presenter Notes
+===============
 
 ---
 
@@ -639,7 +653,8 @@ MMD allows you to turn this:
 
 ![MMD table](images/mmd_table.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 It is optional whether you have |’s at the beginning and end of lines.
 You can use normal Markdown markup within the table cells.
@@ -670,7 +685,8 @@ Which appears as:
 </ol>
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -682,7 +698,8 @@ The German Bundestag hosts a repository of all Germany’s rules and regulations
 
 ![bundestag](images/bundestag.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---

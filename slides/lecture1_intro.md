@@ -23,7 +23,8 @@
 
 To equip students with relevant, modern, flexible tools for proficient statistical computation.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Many modern problems/data require a computational approach
 
@@ -46,7 +47,8 @@ Bios 301
 * **Lecture 12**: I/O and databases; regular expressions (Chapters 10-11) 
 * **Lecture 13**: Overview of STATA 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -68,7 +70,8 @@ Bios 366
 
 ## Cumulative
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Content later in the course builds on what was presented earlier -- keep up!
 
@@ -96,7 +99,8 @@ The final exam has been tentatively scheduled for December 13.
 
 ![The Art of R Programming](http://nostarch.com/sites/default/files/imagecache/product_full/R_cvr_front.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Read some of it every week.
 
@@ -195,7 +199,8 @@ Typical components of statistical analysis:
 
 Each of these may, and often do, require programming.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 The precise function for doing your particular analysis may not exist!
 
@@ -224,7 +229,8 @@ However, much of modern research is too complicated to be reproduced from simple
 
 Fortunately, tools exist for making statistical analyses and reporting 100% reproducible.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 The *entire analysis* should be reproducible!
 
@@ -236,7 +242,8 @@ The *entire analysis* should be reproducible!
 
 ![Potti scandal](images/potti.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 About 1500 hours of work to uncover scandal
 

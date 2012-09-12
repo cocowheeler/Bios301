@@ -1,6 +1,7 @@
 # Version Control using Git
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Version control is used widely by software developers, but can be employed very widely, by anyone who creates and edits documents of any kind, not just source code.
 
@@ -21,7 +22,8 @@ A ***better*** workflow would include tracking the history of the changes that t
 
 A **version control system** (or source code management system) is a systematic tool for managing documents, computer programs, large web sites, and other collections of information that are revised by groups or individuals.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 This is particularly important when collaborating on projects with others, when multiple people are editing the same set of documents, data or source code. We need to know who changed what, when they did it, and why. In the absence of a version control system, developers have had to resort to making "backup" copies of entire folders of code each time they made significant changes, or handed it off for collaborators to contribute.
 
@@ -38,7 +40,8 @@ A *fast*, *modern* system for version control.
 
 Git is a **directory content management system**
 
-# Presenter Notes
+Presenter Notes
+===============
 
 - control of both individual and collaborative projects. 
 - large and powerful set of commands
@@ -52,7 +55,8 @@ Git is a **directory content management system**
 
 ![Basic usage](http://marklodato.github.com/visual-git-guide/basic-usage.svg)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 There are three stages to using Git:
 
@@ -74,7 +78,8 @@ The `git` command line tool is used in conjunction with a command and optional a
                [-c name=value] [--help]
                <command> [<args>]
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -101,7 +106,8 @@ Commit your changes:
     $ git commit -m "Added some fast code!"
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Note that a repository ("repo") can reside anywhere, either on your local machine, on a remote server, or in most cases, both.
 
@@ -129,7 +135,8 @@ Git allows individuals to work separately, but then be able to merge their work 
 
 This applies even when the same document (or even the same sections of a document) are being edited by multiple people.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -159,7 +166,8 @@ Git allows you to control and automate how changes are merged
      * c903738 (tag: v2.2) Changed version to 2.2
      * e421f64 Fixed issue #111
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Git helps you manage situations when multiple changes are in conflict with one another. 
 While Git can be kept simple, it is also flexible and powerful enough for power users.
@@ -185,7 +193,8 @@ This will create a *.gitconfig* file in your home directory with a very simple s
               email = moe@moesbar.com
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 If you ever change your email address, for example, you can either run the command again, or simply edit the *.gitconfig* file directly.
 The *--global* flag indicates that these values are to be applied system-wide; you can override the values for specific projects by running the commands without this flag within the project's directory.
@@ -207,7 +216,8 @@ Converting existing code into a repository:
     $ cd firstrepo
     $ git init
  
-# Presenter Notes
+Presenter Notes
+===============
  
 Have a look at the `.git` directory that is created. This is the only thing that Git adds to the file structure.
 
@@ -240,7 +250,8 @@ Adding content to the working directory is picked up by Git.
     nothing added to commit but untracked files present (use "git add" to track)
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Here, the `status` command reports that there are no outstanding changes to record. This means that the repository has the same state as that of the working directory.
 Creating a file then checking the status of the repo will show that Git is aware of the file, but views it as *untracked*. Notice that at the bottom of the message, Git gives you a hint about what to do next.
@@ -272,7 +283,8 @@ We can add all modified files simultaneously by the syntax:
 
 *Why do we need a staging area?*
 
-# Presenter Notes
+Presenter Notes
+===============
 
 This does not commit the file straight away, but rather, puts it in a staging area, where it is ready to be committed alongside other (perhaps related) files.
 It makes it easier to gather a set of related changes to be committed as a meaningful unit. 
@@ -294,7 +306,8 @@ An explicit `commit` command is then executed to formally give the file membersh
 
 A (mandatory) commit message has been added, using the `-m` flag.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -309,7 +322,8 @@ Git is a **distributed** system: there is no central repository; each clone is a
 
 Git operates **offline**: in the above transactions there was no network activity. 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Git interacts with remote repositories only when explicitly asked to do so, via `push`, `pull` and other remote commands.
 
@@ -335,7 +349,8 @@ What if we change the access timestamp of a file?
     nothing to commit (working directory clean)
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 There is no content in an empty directory.
 `touch` does not change a file's contents.
@@ -359,7 +374,8 @@ It's All About Content
 
 Now we have changed the contents of our file, so it appears as *modified* in Git.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -392,7 +408,8 @@ Let's try adding a file to the repository ...
 
 The file does not exist in our working directory any longer, but Git notices that it is gone!
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Simply removing a file by throwing it in the trash does not remove it from the repository; it only registers as a modification of the file.
 
@@ -419,7 +436,8 @@ The command for removing files from being tracked by Git is `git rm`.
 
 Now the change is staged to be committed, and the file will no longer be tracked by the repository.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Note that evidence of its previous existence still appears in the git log. 
 Later, we will show you how to retrieve files deleted from the repository, if you decide later that you need them.
@@ -431,7 +449,8 @@ Exercise
 
 ### Try renaming a file under version control
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -459,7 +478,8 @@ Renaming Files
 
 Similar to deleting files, you cannot change the name of a file without doing so through Git.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 So, as far as Git is concerned, you have deleted `badfile.txt` and created `goodfile.txt`, which is currently not tracked.
 
@@ -481,7 +501,8 @@ For the change to be propagated as a renaming action, use `git mv`:
     #   renamed:    badfile.txt -> goodfile.txt
     #
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -506,7 +527,8 @@ A `.gitignore` file in any repo directory can be used to omit files from trackin
     *.synctex.gz
     *.toc
 
-# Presenter Notes
+Presenter Notes
+===============
 
 we do not want our status messages to be cluttered with files that Git can see but does not track.
 
@@ -553,7 +575,8 @@ Additional branches allows you to work on additional code, without potentially d
     * master
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -584,7 +607,8 @@ Now we can switch back to the `master` branch and merge the new code.
      0 files changed
      create mode 100644 new_stuff.r
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -610,7 +634,8 @@ Have a look around ... they're the same!
     * cace59c 2012-06-25 | Draft of first model [Christopher Fonnesbeck]
     (END) 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -622,7 +647,8 @@ Cloning is most relevant when you want to get a copy of someone else's repositor
 
 ![knitr repo](images/knitr_repo.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -651,7 +677,8 @@ I now have an identical, first-class copy of Yihui Xie's `knitr` repo!
     :
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 try installing it ...
 
@@ -664,7 +691,8 @@ Exercise
 
     http://github.com/fonnesbeck/Bios301
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Show what happens when I change something on the repo.
 
@@ -694,7 +722,8 @@ This is done using one of several *hashing algorithms*.
 
 ### But, why??
 
-# Presenter Notes
+Presenter Notes
+===============
 
 One typically encounters hashcodes and hashing algorithms in the context of security, but Git uses this relationship to identify the content of files, and hence, to reliably track changes in file content.
 
@@ -707,7 +736,8 @@ Hashes
 
 Git uses the [SHA-1 hashing function](http://en.wikipedia.org/wiki/SHA-1) to encode the files that it tracks.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 a file of arbitrary size is converted into a unique 160-bit string of characters
 
@@ -750,7 +780,8 @@ Then, the probability of getting a hash collision 6e-13.
 
 *No one has ever found a SHA-1 collision.*
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -857,7 +888,8 @@ However, the checkout command simply restores the file to the working directory;
     #   new file:   badfile.txt
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -868,7 +900,8 @@ Git Anatomy
 
 ![Conventions](images/conventions.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -892,7 +925,8 @@ You can always see where HEAD is by looking in your `.git` directory:
     $ cat .git/refs/heads/master 
     e9a570524b63d2a2b3a7c3325acf5b89bbeb131e
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Analogy: the arm of a record player
 
@@ -908,7 +942,8 @@ Under The Hood
 
 ![Commit](images/commit.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -934,7 +969,8 @@ If you’ve made no changes since your last commit, then your snapshot will look
     $ git commit --amend
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -971,7 +1007,8 @@ Following the advice of `git status`:
     #   bar.r
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -1000,7 +1037,8 @@ Again, `git status` gives us a hint!
 
 The changes to the file were discarded, not committed.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 This is a dangerous command!
 
@@ -1020,7 +1058,8 @@ Go to the `Bios301` repo that you cloned in the earlier exercise, and check out 
 
 This shows the name of the remote (origin), the corresponding URL for the remote, and what each URL is used for (fetching and pushing).
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Remotes are identical to local branches except that Git will not allow you to check them out - however, you can merge from them, diff them to other branches, run history logs on them, etc.
 
@@ -1033,7 +1072,8 @@ GitHub is a web-based hosting service for git repositories.
 
 ![Github](images/github.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -1046,7 +1086,8 @@ GitHub Educational Accounts
 
 ![Github](images/github_edu.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -1068,7 +1109,8 @@ For example, let's connect our `firstrepo` repository to a remote repository cal
     origin  git@github.com:fonnesbeck/firstremote.git (fetch)
     origin  git@github.com:fonnesbeck/firstremote.git (push)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 The remote alias name you give it is arbitrary, though "origin" is conventional; `git clone` uses this as a default.
 
@@ -1092,7 +1134,8 @@ Fetching and Pulling
 
 You can see that it identifies the remote master branch as a new one.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -1121,7 +1164,8 @@ Just adding the remote repository does not allow you to merge, however. You need
 
 Again, git gives you a hint ...
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -1144,7 +1188,8 @@ Now a pull works as you would expect ...
      1 file changed, 2 insertions(+)
      create mode 100644 README.md
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -1166,7 +1211,8 @@ If no arguments are provided, git will push all branches to their corresponding 
     To git@github.com:fonnesbeck/firstremote.git
        f947ec8..8fb82d3  master -> master
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -1185,7 +1231,8 @@ If you are collaborating on a remote repository, its usually a good idea to `git
     hint: specify branches to push or set the 'push.default' configuration
     hint: variable to 'current' or 'upstream' to push only the current branch.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -1195,7 +1242,8 @@ Hands-on Exercise
 
 Test your "Git-fu" by forking my [`git_training`](https://github.com/fonnesbeck/git_training) repository, cloning it to your local machine, then correcting the grammatical error in the README file and pushing the edited file back to your remote on GitHub. 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 If you can do this, I will be reasonably confident that you know the basics if Git.
 

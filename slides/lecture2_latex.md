@@ -1,7 +1,8 @@
 Document Preparation using LaTeX
 ================================
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -22,7 +23,8 @@ LaTeX
 - created by Leslie Lamport and still actively maintained 
 - easier to code and extendable (classes, packages, styles)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -45,7 +47,8 @@ Cons of LaTeX:
 - the necessary LATEX commands have to be learned 
 - customization can sometimes be difficult
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -56,7 +59,8 @@ The TEX/LATEX system
 
 ![LaTeX system](images/latex.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -73,7 +77,8 @@ Document Structure
     % this part is the body of your document % this is where you write your text
     \end{document}
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -92,7 +97,8 @@ This is the required first line, though the arguments can vary. This says we wil
 - **book** for real books
 - **letter** for writing letters
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -112,7 +118,8 @@ A lot of packages exist, the most important are:
 - `graphicx` to manage external pictures
 - `inputenc` to choose the encoding of the input text
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -134,7 +141,8 @@ A range of layout options can be set in the preamble. For example, these lines c
     \setlength{\parindent}{0in}
     \setlength{\parskip}{2mm}
 
-# Presenter Notes
+Presenter Notes
+===============
 
 beginners should ignore them (but include them)
 
@@ -163,7 +171,8 @@ A Simple Document
         
     \maketitle % generates a title based on the information in the preamble
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -200,7 +209,8 @@ A Simple Document
     \end{document}  % required; the document ends here
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -213,7 +223,8 @@ Building the Document
 
 ![Built Document](images/binomial.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -250,7 +261,8 @@ Sections have optional subheadings, placed in brackets:
     \section[Effect on executive function]{An analysis of the
     effect of blood Phe levels on executive function}
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Notes
 
@@ -277,7 +289,8 @@ Font Styles
 
 \\[\mathsf{sans}\;\mathsf{serif}\\]
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -306,7 +319,8 @@ Font size
 \\[{\Huge Huge}\\]
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -332,7 +346,8 @@ Positioning
 
 This text is flushleft.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -358,7 +373,8 @@ Or as standalone equations:
 
 \\[f(x | n,p) = {n \choose x} p^x (1-p)^{n-x}\\]
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -404,7 +420,8 @@ $\cdotp\colon\ldotp\vdots\cdots\ddots\ldots\neg\infty\sharp\varnothing\emptyset\
 $\alpha\beta\gamma\delta\epsilon\varepsilon\zeta\eta\theta\vartheta\iota\kappa\lambda\mu\nu
 \pi\varpi\rho\varrho\sigma\varsigma\tau\upsilon\phi\varphi\chi\psi\omega$
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -431,7 +448,8 @@ Integrals:
 \\[\int_0^\infty e^{−x} \, dx\\]
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 bracket notation is a shorthand for `\begin{equation}`
 
@@ -455,7 +473,8 @@ $$A_{m,n} = \begin{pmatrix}
     \vdots & \vdots & \ddots & \vdots \cr a_{m,1} & a_{m,2} & \cdots & a_{m,n}
     \end{pmatrix}$$
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -485,7 +504,8 @@ Enumerated lists:
 1. first thing
 2. second thing
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -509,7 +529,8 @@ This is a two-step process: first the compiler stores the labels, then it replac
 
 ![reference](images/reference.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -519,7 +540,8 @@ Tables
 
 ![Sample table](images/table.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -552,7 +574,8 @@ Tables
         standard deviation and 95\% Bayesian credible interval).
     \end{table}
 
-# Presenter Notes
+Presenter Notes
+===============
 
 `tabular` environment is the table itself; `table` is the table plus the caption, label, etc.
 
@@ -571,7 +594,8 @@ A preference for a table's vertical postion on the page can be specified:
 - `t`: top
 - `p`: separate page
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -591,7 +615,8 @@ Column alignment and formatting are under the user's control.
 - `||`: double vertical line
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -608,7 +633,8 @@ Table rows consist of column separators, content and line endings.
 - `\hline`: horizontal line
 - `\cline{from-to}`: partial line
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -620,7 +646,8 @@ How would you code this table?
 
 ![Table exercise](images/table_example.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 2 columns
 justification
@@ -641,7 +668,8 @@ Exercise
 
 ![Table exercise](images/table_example.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 `cline` == column line
 
@@ -660,7 +688,8 @@ Floats are useful when:
 
 Floats *usually* have an associated caption and a label (for cross-referencing).
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Allows you to keep a figure/table with text in the original document, but put it in a different place in the output.
 
@@ -678,7 +707,8 @@ Adding figures to your document is done via the `graphicx` package:
     \includegraphics[options]{path_to_image}
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -701,7 +731,8 @@ Images
 
 ![sample figure](images/measurement.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -724,7 +755,8 @@ Though there are reasonable defaults, LaTeX provides fine-grained control of all
     \usepackage[landscape]{geometry}
 
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -744,7 +776,8 @@ LaTeX *class* files (`.cls`) define custom document classes.
 
 ![JIMD example](images/journal.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -756,7 +789,8 @@ Support for citations and bibliographies is provided by the *BibTeX* package.
 
 ![Sample references](images/references.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -788,7 +822,8 @@ BibTeX Entries
     pages = {733--807}
     }
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -811,7 +846,8 @@ Bibtex comes bundled with several bibliography styles, including:
 - apa
 - chicago
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -832,7 +868,8 @@ If all goes well, you should see some very verbose output that terminates with i
     Output written on example.pdf (16 pages, 303102 bytes).
     Transcript written on example.log.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 DVI (device independent) files are not intended to be human-readable; they consist of binary data describing the visual layout of a document in a manner not reliant on any specific image format, display hardware or printer.
 
@@ -852,7 +889,8 @@ It is easy to cause a LaTeX build error: mistyping commands, omitting closing br
 
 LaTeX writes a comprehensive log file (.log suffix) every time it is run, for debugging purposes.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 Errors will halt the build; warnings will not.
 Good text editors will help prevent some syntax errors
@@ -871,7 +909,8 @@ When LaTeX encounters an error, the user is invited to specify how to deal with 
 - `r`: ignore errors (100 max.)
 - `h`: provide help, where available
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 ---
@@ -883,7 +922,8 @@ Most programming text editors will have a LaTeX mode.
 
 ![LaTeX mode in SublimeText 2](images/sublime_latex.png)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 ---
 
@@ -896,7 +936,8 @@ Simplified Intro to LaTeX (`reference` folder)
 
 Not So Short Introduction to LaTeX (`reference` folder)
 
-# Presenter Notes
+Presenter Notes
+===============
 
 ---
 
@@ -905,7 +946,8 @@ Exercise: Compile a LaTeX Document
 
 In the `exercises` folder on github.com/Bios301, there is a sample LaTeX document, `binomial.tex`. Try compiling this file into a PDF document.
 
-# Presenter Notes
+Presenter Notes
+===============
 
 
 
@@ -922,5 +964,5 @@ In the `exercises` folder on github.com/Bios301, there is a sample LaTeX documen
   });
 </script>
 <script type="text/javascript"
-    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    src="../MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
