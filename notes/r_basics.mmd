@@ -236,7 +236,8 @@ shortcuts for automating programming tasks. RStudio includes an editor
 (in the top-left corner of the application) that allows code to be sent
 directly to the R console.
 
-![Sample R script in TextMate](figure/editor.png)
+![Sample R script in TextMate](figure/editor.pdf)
+
 Once you have created a script, it should be saved to your computer's
 hard disk before it is run in R. You should save the file to the current
 working directory that is being used by R. You can persuade R to give
@@ -2044,14 +2045,14 @@ argument:
 
     > plot(haart$weight, haart$hemoglobin)
 
-![Simple scatterplot](figure/simple_scatter.png)
+![Simple scatterplot](figure/simple_scatter.pdf)
 Notice here that some values of hemoglobin appear to have been rounded
 to the nearest integer. We can make aesthetic improvements to the plot
 by adding axis labels:
 
     > plot(haart$weight, haart$hemoglobin, xlab="Weight", ylab="Hemoglobin")
 
-![Scatterplot with labels](figure/labelled_scatter.png)
+![Scatterplot with labels](figure/labelled_scatter.pdf)
 We can entirely change the type of plot by specifying the `type`
 argument, which allows for a variety of arguments:
 
@@ -2121,19 +2122,19 @@ scatterplot:
         > points(haart$weight, haart$hemoglobin, col=ifelse(haart$male==1, 
         + "darkseagreen4", "red"), pch=ifelse(haart$aids==1, 1, 3))
 
-![Custom points](figure/points.png)
+![Custom points](figure/points.pdf)
 3)  Now axes can be added, with any desired options:
 
         > axis(1, lwd=2)
         > axis(2, lwd=2)
 
-![Adding axes](figure/axes.png)
+![Adding axes](figure/axes.pdf)
 4)  Now axis labels can be added, in the desired orientation:
 
         > mtext("Weight", side=1, line=3)
         > mtext("Hemoglobin", side=2, line=3)
 
-![Axis labels](figure/labels.png)
+![Axis labels](figure/labels.pdf)
 5)  Finally, a legend to decipher the color and shape of the points:
 
         > legend(x=80, y=5, 
@@ -2141,7 +2142,7 @@ scatterplot:
         +  col=c("darkseagreen4", "red", "darkseagreen4", "red"),
         +  pch=c(1,1,3,3), bty="n")
 
-![Added legend](figure/legend.png)
+![Added legend](figure/legend.pdf)
 ### Saving plots
 
 Rather than writing plots to the screen, as we have done, it is
@@ -2163,7 +2164,7 @@ If you wish to save a plot that was drawn to the screen, you can use the
 appropriate menu item for your particular operating system to save the
 plot to a graphic file format.
 
-![Saving a plot on Mac OS X](figure/save.png)
+![Saving a plot on Mac OS X](figure/save.pdf)
 ### Trellis plots
 
 Often we wish to express more than two dimensions of data
@@ -2190,7 +2191,7 @@ that you can specify the data frame as an additional `data` argument, so
 that you do not have to index individual variables. This results in the
 following:
 
-![Densities of weight by sex](figure/weight_by_sex.png)
+![Densities of weight by sex](figure/weight_by_sex.pdf)
 We see separate density plots of weight by sex, with a *rug* of actual
 data points along the x-axis. However, the labeling of the panels is
 odd, as they both say "male"; this is because by default it uses the
@@ -2204,13 +2205,13 @@ done as follows:
     > levels(haart$male_factor) <- c("Female", "Male")
     > densityplot(~ weight | male_factor, data=haart)
 
-![Weight plot with proper labels](figure/labelled_weight.png)
+![Weight plot with proper labels](figure/labelled_weight.pdf)
 Alternatively, we can display the same data as a box-and-whisker plot,
 using the `bwplot` function, with similar syntax:
 
     > bwplot(~ weight | male_factor, data=haart)
 
-![Box-and-whisker plot](figure/bwplot.png)
+![Box-and-whisker plot](figure/bwplot.pdf)
 Notice, however, that this is not an optimal layout of the panels; they
 are compressed horizontally and it is not easy to compare them
 side-by-side. It would be better displayed row-wise rather than
@@ -2218,20 +2219,20 @@ column-wise. We can change this layout easily:
 
     > bwplot(~ weight | male_factor, data=haart, layout=c(1,2))
 
-![Rotated box-and-whisker plot](figure/bwplot_rotated.png)
+![Rotated box-and-whisker plot](figure/bwplot_rotated.pdf)
 Now it is much easier to visualize the difference between the two
 distributions. Yet a third way to display the same information is using
 a histogram:
 
     > histogram(~ weight | male_factor, data=haart, layout=c(1,2))
 
-![Weight histogram](figure/histogram.png)
+![Weight histogram](figure/histogram.pdf)
 We can also create paneled scatterplots of the relationship between two
 variables of interest, conditioned on a third, using `xyplot`:
 
     > xyplot(hemoglobin ~ weight | male_factor, data=haart)
 
-![Hb vs weight by sex](figure/xyplot.png)
+![Hb vs weight by sex](figure/xyplot.pdf)
 For an advanced touch, suppose we want to add a linear regression line
 through each panel's scatterplot. This requires using the `panel`
 argument, which controls the appearance of the plot in each panel. We
@@ -2248,7 +2249,7 @@ points, and an associated regression line, using another function,
 Now, `xyplot` runs the `regline` function for each panel of the plot,
 passing the appropriate subset of data in each case.
 
-![xyplot with panel function](figure/xyplot_panel.png)
+![xyplot with panel function](figure/xyplot_panel.pdf)
 Basic Statistical Analysis
 --------------------------
 
@@ -2365,7 +2366,7 @@ Lets generate a Q-Q plot of the plants from Mississippi:
 
 This should yield the following plot:
 
-![Q-Q plot](figure/qqplot.png)
+![Q-Q plot](figure/qqplot.pdf)
 The curve has obvious deviations from the straight line, so we suspect
 that the data may not in fact be normally-distributed. Lets run a more
 formal test:
