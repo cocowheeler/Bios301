@@ -26,7 +26,7 @@ Submit a single knitr (either `.rnw` or `.rmd`) file, along with a valid PDF out
     
 
 
-2. **Data types** Make sure your answers to different parts of this problem are compatible with each other. (14 points)
+2. **Data types** (14 points)
 
     1. Create the following vector: `x <- c("5","12","7")`. Which of the following commands will produce an error message? For each command, Either explain why they should be errors, or explain the non-erroneous result. (6 points)
            
