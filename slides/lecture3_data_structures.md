@@ -1,7 +1,149 @@
-Data Structures in R
-====================
+Data Types and Structures in R
+==============================
 
 ---
+
+Data Types
+==========
+
+R has several elemental data types.
+
+* numeric
+* integer
+* complex
+* logical
+* character
+
+---
+
+Numeric
+=======
+
+Floating-point numbers are represented by the `numeric` type in R. It is the default computational data type.
+
+    !r
+    > x <- 10.5      # assign a decimal value 
+    > x              
+    [1] 10.5 
+    > class(x)       # print the class name of x 
+    [1] "numeric"
+    
+Even if we assign an integer to a variable, it gets saved as a `numeric` type:
+
+    !r
+    > k <- 1 
+    > k              
+    [1] 1 
+    > class(k)       # print the class name of k 
+    [1] "numeric"
+    
+We can query this directly:
+
+    !r
+    > is.integer(k)  # is k an integer? 
+    [1] FALSE
+    
+---
+
+Integer
+=======
+
+Integers can be created only by *casting* a numeric value, using the `as.integer()` function:
+
+    !r
+    > y <- as.integer(3) 
+    > y              
+    [1] 3 
+    > class(y)       
+    [1] "integer" 
+    > is.integer(y)  
+    [1] TRUE
+
+We can cast other types to integers this way:
+
+    !r
+    > as.integer(42.1343)
+    [1] 42
+    > as.integer("6.778")
+    [1] 6
+    > as.integer(TRUE)
+    [1] 1
+    
+---
+
+Complex
+=======
+
+A complex value in R is defined via the pure imaginary value i.
+
+    !r
+    > z <- 1 + 2i      
+    > z              
+    [1] 1+2i 
+    > class(z)       
+    [1] "complex"
+    
+The following gives an error as −1 is not a complex value.
+
+    !r
+    > sqrt(−1)      
+    [1] NaN 
+    Warning message: 
+    In sqrt(−1) : NaNs produced
+
+Instead, we have to use the complex value −1 + 0i.
+
+    !r
+    > sqrt(−1+0i)  
+    [1] 0+1i
+    > sqrt(as.complex(−1)) 
+    [1] 0+1i
+
+---
+
+Logical
+=======
+
+A logical value is often created via comparison between variables.
+
+    > x <- 1; y <- 2   
+    > z <- x > y      
+    > z              
+    [1] FALSE 
+    > class(z)       
+    [1] "logical"
+    
+Standard logical operations are "&" (and), "|" (or), and "!" (negation).
+
+    > u <- TRUE; v <- FALSE 
+    > u & v          # u AND v 
+    [1] FALSE 
+    > u | v          # u OR v 
+    [1] TRUE 
+    > !u             # negation of u 
+    [1] FALSE
+
+---
+
+Character
+=========
+
+A character object is used to represent string values in R. We convert objects into character values with the as.character() function:
+
+    > (x = as.character(3.14))
+    [1] "3.14" 
+    > class(x)       
+    [1] "character"
+    
+Two character values can be concatenated with the paste function.
+
+    > fname = "Joe"; lname ="Smith" 
+    > paste(fname, lname) 
+    [1] "Joe Smith" 
+    
+---
+
+
 
 Vectors
 =======
@@ -120,6 +262,72 @@ To compare whole vectors, best to use `identical()` or `all.equal()`:
 
 Presenter Notes
 ===============
+
+
+---
+
+Special Values
+==============
+
+In addition to the standard data types and data structures, there are four "special" values that you will encounter in R.
+
+* NA
+* Inf
+* NaN
+* NULL
+
+---
+
+NA
+==
+
+`NA` is used to represent missing values (*i.e.* not available). For example, if you expand the length of a vector beyond the indices where values were defined, `NA` values are inserted:
+
+    > v <- c(1,2,3) 
+    > v
+    [1] 1 2 3
+    > length(v) <- 4 
+    > v
+    [1] 1 2 3 NA
+
+
+---
+
+Inf
+===
+
+`Inf` represents infinity. It is most commonly encountered when a computation results in a number that is too big:
+
+     > 2^1024
+     [1] Inf
+     > -2^1024
+     [1] -Inf
+
+This is also the value returned when you divide by 0:
+
+    > 1/ 0 
+    [1] Inf
+
+---
+
+NaN
+===
+
+`NaN` stands for "not a number", and it is returned when a computation is nonsensical:
+
+    > Inf - Inf 
+    [1] NaN 
+    > 0/0
+    [1] NaN
+
+
+---
+
+NULL
+====
+
+The `NULL` value indicates that there is no value assigned to a particular object. Note the difference between this and the notion of a missing value or a nonsensical value.
+
 
 
 ---
