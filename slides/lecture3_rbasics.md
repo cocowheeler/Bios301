@@ -221,7 +221,8 @@ The largest source of third-party packages is through an online repository calle
 [Comprehensive R Archive Network](http://cran.r-project.org/). A convenient method for
 installing a single package is to use the `install.packages` command from the R console:
 
-    install.packages("ggplot2", dependencies=TRUE)
+    !r
+    > install.packages("ggplot2", dependencies=TRUE)
 
 Including the `dependencies=TRUE` flag also installs any other packages
 that the target package requires to run on your machine. 
