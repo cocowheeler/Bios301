@@ -344,6 +344,65 @@ How do we define $g$?
 
 ---
 
+R Code
+======
+
+How do we implement this in R?
+
+---
+
+R Code
+======
+
+How do we implement this in R?
+
+* `while` loop
+* conditional statement
+
+Before plunging into programming, its a good idea to write *pseudocode* to outline the algorithm that you are about to implement.
+
+    1. choose initial value
+    2. specify stopping condition
+    3. loop until stopping condition met:
+        - calculate new value based on current value
+        - set new value to current value
+    4. return result
+    
+---
+
+R Code
+======
+
+    !r
+    # Initialize value
+    x <- 10
+    x_old <- x + 1e6
+    # Set tolerance
+    tol <- 1e-9
+    # Specify maximum number of iterations
+    max_iter <- 100
+    # Keep track of number of interations
+    iter <- 0
+    # Loop
+    while((abs(x-x_old) > tol) && (iter<max_iter)) {
+        # Replace old value with current
+        x_old <- x
+        # Calculate new value
+        x <- exp(exp(-x))
+        # Increment counter
+        iter <- iter + 1
+    }
+    
+    > x
+    [1] 1.3098
+    > abs(x-x_old)
+    [1] 4.49629e-10
+    > iter
+    [1] 22
+
+
+---
+
 Problems?
 =========
 
@@ -504,6 +563,13 @@ We can repeat the same action repeatedly using `replicate`:
     !r
     > mean(replicate(1000, sd(rnorm(1000))))
     [1] 0.9992584
+
+---
+
+Exercise
+========
+
+### Implement the Newton-Raphson algorithm in R
 
 <!-- Mathjax -->
 <script type="text/x-mathjax-config">
