@@ -1,12 +1,17 @@
 Control Structures
 ==================
 
+Presenter Notes
+===============
 
+Go over document conversion workflow
 
 ---
 
 Control Structures
 ==================
+
+See Chapter 7 of *Matloff*
 
 * **Conditions**: Use `if` or `switch` statements to control execution conditional on data.
 * **Iteration**: Use `for()`, `while()` and `repeat()` to do similar things a certain number of times, or while conditions hold, or until conditions are met.
@@ -313,9 +318,10 @@ $$g_1(x) = x^{1.5}, \, g_2(x) = x^{0.75}$$
 
 both $g_1, g_2$ have fixed points at 1 (by inspection), but $g_1$ diverges.
 
-In general, the algorithm converges if $|g'(a)<1|$, and diverges otherwise.
+In general, 
 
-* Also, the initial value should be in the "neighborhood" of $x_0$ to guarantee convergence.
+* the algorithm converges if $|g'(a)<1|$, and diverges otherwise.
+* the initial value should be in the "neighborhood" of $x_0$ to guarantee convergence.
 
 In practice, we may *converge* to $a$ without reaching it. We want to stop when $x_n$ is "close enough":
 
@@ -326,7 +332,7 @@ $$ |x_n - x_{n-1}| \le \epsilon$$
 Example
 =======
 
-**Find the root of** $f(x) = \log(x) - \exp(-x)$
+### Find the root of $f(x) = \log(x) - \exp(-x)$
 
 How do we define $g$?
 
@@ -403,8 +409,8 @@ R Code
 
 ---
 
-Problems?
-=========
+Problems with Fixed-point Iteration?
+====================================
 
 1. There are many ways of expressing $g(x)$, each having different convergence properties.
 2. The algorithm is relatively **slow**.
@@ -442,6 +448,13 @@ $$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
 
 ---
 
+Newton-Raphson
+==============
+
+![Newton-Raphson](images/newton-raphson.png)
+
+---
+
 Convergence of Newton-Raphson
 =============================
 
@@ -473,6 +486,31 @@ If sequence is converging to $a$, then for $x$ near $a$, we have:
 $$f(x) \approx f'(a)(x-a)$$
 
 $$\Rightarrow |x-a| \le \frac{\epsilon}{f'(a)}$$
+
+---
+
+Pseudocode
+==========
+
+1. Specify functions $f(x)$, $f'(x)$
+2. Specify tolerance for convergence
+3. Initialize x
+4. Loop until convergence:
+    * calculate $f(x_i)$ and $f'(x_i)$
+    * calculate new value $x_{i+1}$
+5. Return result
+
+Presenter Notes
+===============
+
+Convergence checking, maximum iterations    
+
+---
+
+Exercise
+========
+
+### Implement the Newton-Raphson algorithm in R
 
 
 ---
@@ -564,12 +602,6 @@ We can repeat the same action repeatedly using `replicate`:
     > mean(replicate(1000, sd(rnorm(1000))))
     [1] 0.9992584
 
----
-
-Exercise
-========
-
-### Implement the Newton-Raphson algorithm in R
 
 <!-- Mathjax -->
 <script type="text/x-mathjax-config">

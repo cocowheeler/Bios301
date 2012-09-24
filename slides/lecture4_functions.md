@@ -75,17 +75,26 @@ We can write (or *declare*) functions using a function  ... called `function`:
 Writing Functions
 =================
 
-An example of a very simple (and redundant) function is one which returns the absolute value of its argument:
+An example of a very simple (and redundant) function is one which returns the absolute value of its argument(1):
 
     !r
-    absval <- function(value) { if (value<0) -value else value }
+    absval <- function(value) { 
+        if (value<0) {
+            -value 
+        } else {
+            value 
+        }
     
 By default, a function returns the last evaluation, but it is often better (clearer) to explicitly use the `return` statement:
 
     !r
     return(value)
 
-The inputs (arguments) and outputs (return values) of a function are known as *interfaces*.
+Function's inputs (arguments) and outputs (return values) are called *interfaces*.
+
+1. *Can also be written as:* 
+
+        absval <- function(value) if (value<0) -value else value
 
 ---
 
@@ -93,6 +102,11 @@ Exercise
 ========
 
 ### Vectorize the `absval` function
+
+Presenter Notes
+===============
+
+Hint: use vector indexing!
 
 ---
 
@@ -269,8 +283,7 @@ Function Scope
 Variables defined inside a function, or in its arguments, are only available inside the function. 
 
     !r
-    > x <- 7
-    >x
+    > (x <- 7)
     [1] 7
     > square <- function(y) { x <- y^2; return(x) } 
     > square(7)
@@ -280,7 +293,7 @@ Variables defined inside a function, or in its arguments, are only available ins
     > y
     Error: object 'y' not found
 
-The assignment of 7 to `y` and of 49 to `x` only applies within the *scope* of the function.
+The assignment of 7 to `y` and of 49 to `x` only applies within the *scope* of the function. In other words, `y` is *local* to `square`, but `x` is *global*.
 
 On the other hand, functions can see variables described in its environment:
 
@@ -294,6 +307,36 @@ Presenter Notes
 ===============
 
 Relying on variables outside the function is bad practice
+
+---
+
+Environments and Scoping
+========================
+
+In the previous slide, both the variable `x` and the function `square` were created in the top-level environment, `.GlobalEnv`.
+
+    !r
+    > ls()
+    [1] "square" "x"     
+    > ls.str()
+    square : function (y)  
+    x :  num 7
+    > environment(square)
+    <environment: R_GlobalEnv>
+
+Here's another example with a function `h` that is created inside of another function `f`. Its environment is referred to by its memory location:
+
+    !r
+    > w <- 12
+    > f <- function(y) {
+       d <- 8
+       h <- function() return(d*(w+y))
+       print(environment(h))
+       return(h())
+    }
+    > f(2)
+    <environment: 0x875753c>
+    [1] 112
 
 ---
 
@@ -311,8 +354,30 @@ There are a few exceptions to these rules, such as universal constants and plott
 
 ---
 
+Side Effects
+============
+
+When functions change non-local variables, this is known as a *side-effect*.
+
+In general, side effects are considered poor practice because it is easy to produce unexpected results. 
+
+R makes it difficult to generate side effects because it makes local copies of all global variables when they are used inside a function.
+
+    !r
+    > v <- 1:10
+    > u <- function() {v[3] <- 0}
+    > u()
+    > v
+     [1]  1  2  3  4  5  6  7  8  9 10
+     
+      
+
+---
+
 Example: Fixed-point Iteration
 ==============================
+
+Here is the algorithm for fixed-point iteration:
 
     !r
     # Initialize value
@@ -333,7 +398,8 @@ Example: Fixed-point Iteration
         # Increment counter
         iter <- iter + 1
     }
-    
+
+   
 ---
 
 Encapsulate in a Function
@@ -362,6 +428,8 @@ To avoid cutting-and-pasting every time we want to re-run the code, we can make 
         }
         return(x)
     }
+    
+*That was easy!*
 
 ---
 
@@ -387,6 +455,9 @@ We may want to specify alternate tolerance or stopping time, so we can make thes
         }
         return(x)
     }
+
+*Are we finished?*
+
 
 ---
 
@@ -417,6 +488,8 @@ We may wish to find the root of a different function, so lets allow it to be pas
     > f2 <- function(x) x - log(x) + exp(-x)
     > fixedpoint(f2)
     [1] 1.3098
+
+*One more thing ...*
     
 
 ---
