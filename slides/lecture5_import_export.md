@@ -336,3 +336,57 @@ The package `foreign` provides import facilities for files produced by:
 * **SPSS** read.spss
 
 and export and import facilities for Stata (`read.dta`, `write.dta`).
+
+---
+
+Example
+=======
+
+In some situations, data are distributed among several files, sometimes in different locations. Rather than manually importing and combining data from different sources, it is preferable to do so programmatically in R.
+
+As a simple example, let's set up three files containing some fake data:
+
+    !r
+    > cat(file="file1.dat", 5, 12, 13, sep=',')
+    > cat(file="file2.dat", 7, 6, 1, sep=',')
+    > cat(file="file3.dat", 14, 5, 5, sep=',')
+    
+Can we write code to sum the contents of all three files?
+
+---
+
+Pseudocode
+==========
+
+Before we write code, let's write *pseudocode* to make sure we know what needs to be done to realize our objective.
+
+
+    1. Initialize the sum to zero
+    2. Identify the contents of the data directory
+    3. Loop over each file in the directory:
+        * determine if the file is a data file
+        * if its a data file, read its contents, if not, move to the next file
+        * add contents of file to sum
+    4. return result
+    
+---
+
+R Code
+======
+
+    !r
+    sumfiles <- function(dname) {
+        # Initialize sum
+        tot <- 0
+        # Get names of all files in the directory
+        fls <- dir(dname)
+        # Loop over directory contents
+        for (f in fls) {
+            # Determine if item is a data file
+            if (substr(f, nchar(f)-3, nchar(f))=='.dat') {
+                # Sum contents and add to total
+                tot <- tot + sum(scan(f,sep=',',quiet=TRUE))
+            }
+        }   
+        return(tot)
+    }
