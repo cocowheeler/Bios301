@@ -46,15 +46,15 @@ The default data structure for dates in R is the `Date` class. Internally, `Date
 `Date` objects can be subtracted from one another, or have their default units changed:
 
     !r
-    > Sys.Date() - as.Date("1970-09-03")
-    Time difference of 15367 days
-    > difftime(Sys.Date(), as.Date("1970-09-03"), units="secs")
-    Time difference of 1327708800 secs
+    > Sys.Date() - as.Date("2003-05-17")
+    Time difference of 3425 days
+    > difftime(Sys.Date(), as.Date("2003-05-17"), units="secs")
+    Time difference of 295920000 secs
     
 ---
 
-POSIXt Classes
-===============
+Date-Time Data
+==============
 
 For date-time information, there is a choice of several packages. Two standard build-in classes are the `POSIXct` and `POSIXlt` classes, which stand for calendar time and local time representations, respectively.
 
@@ -114,6 +114,11 @@ It is also possible to convert POSIXt variables to character strings of an arbit
         format = "%m-%d-%y %H:%M")
     [1] "04-06-08 10:11"
 
+Presenter Notes
+===============
+
+Note that 12-hour clock hours is denoted by %I
+
 ---
 
 Example
@@ -150,10 +155,11 @@ POSIXt Gotchas
 Sometimes R will change date-time classes on you without warning!
 
     !r
-    dts <- data.frame(day = c("20081101", "20081101", "20081101", "20081101", "20081101", "20081102",
-        "20081102", "20081102", "20081102", "20081103"), time = c("01:20:00", "06:00:00", "12:20:00",
-        "17:30:00", "21:45:00", "01:15:00", "06:30:00", "12:50:00", "20:00:00", "01:05:00"), value = c("5",
-        "5", "6", "6", "5", "5", "6", "7", "5", "5"))
+    dts <- data.frame(day = c("20081101", "20081101", "20081101", "20081101", "20081101", 
+            "20081102", "20081102", "20081102", "20081102", "20081103"), 
+        time = c("01:20:00", "06:00:00", "12:20:00", "17:30:00", "21:45:00", "01:15:00", 
+            "06:30:00", "12:50:00", "20:00:00", "01:05:00"), 
+        value = c("5", "5", "6", "6", "5", "5", "6", "7", "5", "5"))
     dts1 <- paste(dts$day, dts$time)
     dts2 <- as.POSIXct(dts1, format = "%Y%m%d %H:%M:%S")
     dts3 <- as.POSIXlt(dts1, format = "%Y%m%d %H:%M:%S")
@@ -192,11 +198,13 @@ However, if we build the same data frame using a different approach, it behaves 
 POSIXt Gotchas
 ==============
 
-Rounding date-times can also result in casting to a different type, depending on how you do it.
+Rounding date-times can also result in casting to a different type:
 
     !r
     > dts_all[, "ct"] <- round(dts_all[, "ct"], units = "hours")
     Warning:  provided 9 variables to replace 1 variables
+    > class(dts_all[, "ct"])
+    [1] "POSIXct" "POSIXt" 
     
 We can force it back to POSIXct:
 
@@ -207,7 +215,11 @@ However, rounding a POSIXlt column also fails!
 
     !r
     > dts_all[, "lt"] <- round(dts3, units = "hours") 
-    Warning:  provided 9 variables to replace 1 variables
+    Warning message:
+    In `[<-.data.frame`(`*tmp*`, , "lt", value = list(sec = c(0, 0,  :
+      provided 9 variables to replace 1 variables
+    > dts_all[, "lt"]
+     [1] 0 0 0 0 0 0 0 0 0 0
     
 But magically, assigning with a `$` works as expected:
 

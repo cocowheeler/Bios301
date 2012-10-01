@@ -86,13 +86,46 @@ The function `str` reveals the structure of the data frame, including the number
      $ logvl      : num  NA NA NA NA 4 ...
      $ weight     : num  NA 58.1 48.1 46 NA ...
      $ hemoglobin : num  NA 11 1 NA NA NA 11 NA NA NA ...
-     $ initreg    : Factor w/ 47 levels "3TC,ABC,AZT",..: 10 10 10 17 19 17 17 10 1 27 ...
-     $ initdate   : Factor w/ 681 levels "1/1/02","1/1/03",..: 508 150 384 319 635 188 278 675 581 484 ...
-     $ lastvisit  : Factor w/ 509 levels "","1/10/05","1/10/08",..: 195 189 103 352 90 201 220 167 86 468 ...
+     $ init.reg    : Factor w/ 47 levels "3TC,ABC,AZT",..: 10 10 10 17 19 17 17 10 1 27 ...
+     $ init.date   : Factor w/ 681 levels "1/1/02","1/1/03",..: 508 150 384 319 635 188 278 675 581 484 ...
+     $ last.visit  : Factor w/ 509 levels "","1/10/05","1/10/08",..: 195 189 103 352 90 201 220 167 86 468 ...
      $ death      : int  0 0 1 1 0 0 0 0 0 1 ...
-     $ datedeath  : Factor w/ 113 levels "","1/11/06","1/22/04",..: 1 1 2 70 1 1 1 1 1 107 ...
+     $ date.death  : Factor w/ 113 levels "","1/11/06","1/22/04",..: 1 1 2 70 1 1 1 1 1 107 ...
 
 Several columns were imported as a `Factor` type by default.
+
+---
+
+Attaching Data Frames
+=====================
+
+If you do not wish to prefix each variable by the name of the data frame, it is
+possible to `attach` the data frame to the current environment.
+
+    !r
+    > attach(haart)
+    > weight[1:20]
+     [1]      NA 58.0608 48.0816 46.0000      NA 54.8856 55.3392      NA      NA
+    [10]      NA 57.0000 48.0000 55.3392 53.0000      NA      NA      NA 64.0000
+    [19] 61.2360 73.0000
+
+This function should be used carefully: it is easy to cause namespace conflicts,
+that is, variables that already exist in one environment are silently overwritten
+by other variables that are attached.
+
+If you do choose to use `attach`, it is good practice to detach the workspace at
+the end of any script that attaches it:
+
+    !r
+    > detach(haart)
+    > weight
+    Error: object 'weight' not found
+
+Presenter Notes
+===============
+
+Note that the changing the variables that are attached to a particular
+environment does not change them in the original data frame
 
 ---
 
@@ -106,10 +139,10 @@ The `factor` type represents variables that are categorical, or nominal. That is
 * gender
 * nationality
 
-For example, let's look at the `initreg` variable in the HAART dataset, which shows the initial drug regimen for each patient:
+For example, let's look at the `init.reg` variable in the HAART dataset, which shows the initial drug regimen for each patient:
 
     !r
-    > str(haart$initreg)
+    > str(haart$init.reg)
      Factor w/ 47 levels "3TC,ABC,AZT",..: 10 10 10 17 19 17 17 10 1 27 ...
 
 This shows each drug combination has a label and a unique number for each combination. These numbers, however, have no intrinsic order.
@@ -122,7 +155,7 @@ Factors
 Levels may be defined that may not actually be present in the data. For example, let's generate some random data between 0 and 4, and turn it into a factor:
 
     !r
-    > (x <- as.factor(rbinom(20, 4, 0.5)))
+    > (x <- factor(rbinom(20, 4, 0.5)))
      [1] 3 1 2 2 1 1 2 4 1 4 2 2 3 0 2 2 2 0 1 3
     Levels: 0 1 2 3 4
     
@@ -145,6 +178,32 @@ However, we cannot assign values to a factor variable that is not already among 
     
 ---
 
+Generating Factor Variables
+===========================
+
+As an example, lets convert the `male` variable into a factor. By default, since it is an indicator variable that equals 1 for male patients and 0 for females, `read.table` assumes it is an integer-valued variable and imports it as such. But, there is no intrinsic ordering to gender, so it is more useful treating it as a factor.
+
+    !r  
+    > (haart$gender <- factor(haart$male))
+     [1] 1 1 1 0 1 0 0 1 1 1 1 1 0 0 0 0 1 1 0 1 0 1 0 0 0 0 1 0 1 0 0 0 1 1 1 1 0
+     ...
+     [963] 1 1 1 1 1 0 1 0 1 1 1 1 1 1 0 1 0 0 1 1 1 1 1 0 0 1 1 1 1 1 1 0 1 1 0 0 0
+     [1000] 0
+    Levels: 0 1
+
+We may also want to add readable labels to the levels, for use in output and plotting:
+
+    !r
+    > levels(haart$gender) <- c("female","male")
+    
+These steps can be combined into a single call:
+
+    !r
+    > haart$gender <- factor(haart$male, labels=c("female","male"))
+
+
+---
+
 Indexing
 ========
 
@@ -165,14 +224,12 @@ If you recall from the data structures lecture, we can *index* values from a dat
 Multiple columns can be indexed using a vector of column names:
 
     !r
-    > x <- haart[c("male", "age", "death")]
-    > head(x)
-      male age event
-    1    1  25     0
-    2    1  49     0
-    3    1  42     0
-    4    0  33     1
-    5    1  27     0
+    > (x <- haart[c("male", "age", "death")])
+        male      age death
+    1      1 25.00000     0
+    2      1 49.00000     0
+    ...
+    1000   0 40.00000     0
     
 ---
 
@@ -181,28 +238,25 @@ Indexing
 
 We can also extract particular rows according to the value of one or more variables. For example, if we are interested in the above columns for males:
 
-    > y <- x[x$male==1,]
-    > head(y)
-      male age death
-    1    1  25     0
-    2    1  49     0
-    3    1  42     0
-    5    1  27     0
-    8    1  31     0
-    9    1  52     0
+    !r
+    > (y <- x[x$male==1,])
+        male      age death
+    1      1 25.00000     0
+    2      1 49.00000     0
+    ...
+    996    1 42.00000     0
 
 We could have combined the previous two  operations into a single call that subsets
 the specified columns that correspond to male :
 
-    > y <- haart[haart$male==1, c("male", "age", "death")]
-    > head(y)
-      male age death
-    1    1  25     0
-    2    1  49     0
-    3    1  42     0
-    5    1  27     0
-    8    1  31     0
-    9    1  52     0
+    !r
+    > (y <- haart[haart$male==1, c("male", "age", "death")])
+        male      age death
+    1      1 25.00000     0
+    2      1 49.00000     0
+    ...
+    996    1 42.00000     0
+
 
 ---
 
@@ -214,6 +268,7 @@ last (`last.visit`).
 
 Recall from the lecture on date-time variables that in order to efficiently calculate temporal variables, we need to convert the date fields from character strings to `POSIXct` or `POXIXlt` objects.
 
+    !r
     > haart$last.visit <- as.POSIXct(haart$last.visit)
     > haart$init.date <- as.POSIXct(haart$init.date)
     > haart$date.death <- as.POSIXct(haart$date.death)
@@ -221,6 +276,7 @@ Recall from the lecture on date-time variables that in order to efficiently calc
 Now we can subtract the later date from the earlier to get the time elapsed
 between visits:
 
+    !r
     > (haart$last.visit - haart$init.date)[1:50]
     Time differences in secs
      [1] 115434000 102470400  80874000   3538800 100918800 133833600 129164400
@@ -235,6 +291,7 @@ Modifying and Creating Variables
 
 However, given the context of the data, we are probably interested in days elapsed between visits, rather than seconds. 
 
+    !r
     > difftime(haart$last.visit, haart$init.date, units="days")[1:50]
     Time differences in days
      [1] 1336.04167 1186.00000  936.04167   40.95833 1168.04167 1549.00000
@@ -244,6 +301,7 @@ However, given the context of the data, we are probably interested in days elaps
 
 Even easier, since we are only interested in days, is to convert the dates to `Date` objects, which ignores time information:
 
+    !r
     > (haart$time.diff <- as.Date(haart$last.visit) - as.Date(haart$init.date))
     Time differences in days
      [1] 1336 1186  936   41 1168 1549 1495 1987  820   84  254  438  892  489   85
@@ -259,11 +317,13 @@ Binning Data
 Another common operation is the creation of variable categories from raw
 values. The built-in function `cut` discretizes variables based on boundary values of the implied groups:
 
+    !r
     > haart$age_group <- cut(haart$age, c(min(haart$age),30,50,max(haart$age)))
 
 This creates a group for each group of ages in (18,30], (30, 50], and
 (50, 89]:
 
+    !r
     > table(haart$age_group)
 
      (0,30]  (30,50] (50,Inf] 
@@ -273,8 +333,8 @@ If we wanted to use less than (rather than less than or equal to), we
 could have specified `right=FALSE` to move the boundary values into the
 upper group:
 
-    > table(cut(haart$age, c(min(haart$age),30,50,max(haart$age)), 
-    + right=FALSE))
+    !r
+    > table(cut(haart$age, c(min(haart$age),30,50,max(haart$age)), right=FALSE))
 
     [18,30) [30,50) [50,89) 
        1011    3115     502
@@ -373,10 +433,11 @@ String Matching
 
 The function `charmatch` looks for unique matches for the elements of its first argument among those of its second.
 
-If there is a single exact match or no exact match and a unique
-partial match then the index of the matching value is returned; if
-multiple exact or multiple partial matches are found then ‘0’ is
-returned and if no match is found then NA is returned.
+If there is a single exact match or no exact match and a unique partial match then
+the index of the matching value is returned; if multiple exact or multiple partial
+matches are found then ‘0’ is returned and if no match is found then NA is
+returned.
+
 
     !r
     > words
@@ -395,28 +456,40 @@ returned and if no match is found then NA is returned.
 Text Processing in Action
 =========================
 
-   
+In the HAART database, the field `init.reg` describes the initial drug regimens of each individual, and is imported to R by default as a `factor`. 
 
-Now lets look at another variable that requires special treatment. The
-field `init.reg` describes the initial drug regimens of each individual,
-and is imported by default as a `factor`. However, each entry is in fact
-a list of drugs, and is difficult to interpret as a factor per se. There
-are two approaches to making this variable more usable.
+    !r
+    > head(haart$init.reg)
+    [1] 3TC,AZT,EFV 3TC,AZT,EFV 3TC,AZT,EFV 3TC,AZT,NVP 3TC,D4T,EFV 3TC,AZT,NVP
+    47 Levels: 3TC,ABC,AZT 3TC,ABC,AZT,LPV,RTV 3TC,ABC,AZT,RTV,SQV ... LPV,NVP,RTV
+    > table(haart$init.reg)
 
-First, the type of the variable can be changed to something more
-sensible, such as a list. This requires a handful of steps; first, we
-will convert the variable to a `character` type, and assign it
-(temporarily) to an external variable:
+            3TC,ABC,AZT 3TC,ABC,AZT,LPV,RTV 3TC,ABC,AZT,RTV,SQV         3TC,ABC,EFV 
+                     29                   1                   1                  11 
+        3TC,ABC,IDV,RTV         3TC,ABC,NVP         3TC,ABC,RTV     3TC,ABC,RTV,SQV 
+                      1                   2                   1                   4 
+            3TC,AZT,DDI         3TC,AZT,EFV     3TC,AZT,EFV,NFV     3TC,AZT,FPV,RTV 
+                      1                 421                   1                   1 
+            3TC,AZT,IDV     3TC,AZT,IDV,RTV     3TC,AZT,LPV,RTV         3TC,AZT,NFV 
+                     12                   8                  16                   4 
+
+However, each entry is in fact a list of drugs, and we may not want to analyze the data based on the unique combinations of drugs. 
+
+
+---
+
+Creating a List Variable
+========================
+
+One approach is to change the variable to a useful data structure like a list or a vector, which can be easily queried for individual drugs.
+
+First, we will convert the variable to a `character` type, and assign it to a temprorary variable:
 
     > init.reg <- as.character(haart$init.reg)
 
-The reason that we do this is to take advantage of the `strsplit`
-function, which takes two primary arguments, a character vector that we
-wish to split up and a character string that we want to use as a
-delimiter for splitting. In our case, we do the following:
+Now, we can use some of our text processing skill to extract the individual drug names:
 
-    > haart$init.reg.list <- strsplit(init.reg, ",")
-    > head(haart$init.reg.list)
+    > (haart$init.reg_list <- strsplit(init.reg, ","))
     [[1]]
     [1] "3TC" "AZT" "EFV"
 
@@ -426,91 +499,230 @@ delimiter for splitting. In our case, we do the following:
     [[3]]
     [1] "3TC" "AZT" "EFV"
 
-    [[4]]
-    [1] "3TC" "AZT" "NVP"
+    ...
+    
+---
 
-    [[5]]
-    [1] "3TC" "D4T" "EFV"
+The `apply` Functions
+=====================
 
-    [[6]]
-    [1] "3TC" "AZT" "NVP"
+In some situations, users may want to apply functions to elements of a
+list or data frame. To facilitate this, there is a family of functions
+called `apply` functions that permit functions to be called on subsets
+of data without having to manually loop over elements in complex data
+structures.
 
-Now you can see that the variable `init.reg.list` is a list, each
-element of which can in turn contain an arbitrary number of elements.
-So, it can accommodate regimens of different combinations of drugs. How
-can we use this? Perhaps we want to know all the patients that have D4T
-as part of their regimens. We can use an `apply` function to search the
-`init.reg.list` variable to see if it contains the value `D4T`. For
-this, we make list of the `%in%` operator, which returns `TRUE` if the
-value on the left hand side of the operator is contained in the vector
-on the right hand side, or `FALSE` otherwise. Using this in a function
-passed to `sapply`, we get a list of `TRUE` and `FALSE` values, which
-can be used to index the rows that contain D4T in their regimens:
+`tapply` applies a function to different subsets of the data, grouped
+according to factor variables. For example, suppose we wanted to know
+the mean weight of subjects by gender:
 
-    > haart.D4T <- haart[sapply(haart$init.reg.list, function(x) 
-    + 'D4T' %in% x), ]
-    > head(haart.D4T)
-       male      age aids cd4baseline    logvl weight hemoglobin    init.reg  init.date last.visit death
-    5     1 27.00000    0          52 4.000000     NA         NA 3TC,D4T,EFV 2004-09-01 2007-11-13     0
-    16    0 43.00000    1          49       NA     NA    3.00000 3TC,D4T,NVP 2004-06-07 2004-06-12     1
-    18    1 33.85079    1           4       NA     64   12.00000 3TC,D4T,EFV 2004-10-12 2006-03-26     0
-    25    0 29.00000   NA          25 4.463878     44         NA 3TC,D4T,EFV 2006-08-15 2007-04-13     0
-    30    0 49.79877    1         207       NA     36   10.66667 3TC,D4T,EFV 2004-03-05 2006-02-13     0
-    38    0 37.00000    1          NA       NA     NA   12.80000 3TC,D4T,NVP 2007-09-05 2007-12-19     0
-       date.death event followup lfup pid male_factor init.reg.list
-    5        <NA>     0      365    0   5        Male 3TC, D4T, EFV
-    16 2004-06-12     1        5    0  16      Female 3TC, D4T, NVP
-    18       <NA>     0      365    0  18        Male 3TC, D4T, EFV
-    25       <NA>     0      241    0  25      Female 3TC, D4T, EFV
-    30       <NA>     0      365    0  30      Female 3TC, D4T, EFV
-    38       <NA>     0      105    0  38      Female 3TC, D4T, NVP
+    !r
+    > tapply(haart$weight, haart$male, mean, na.rm=TRUE)
+           0        1 
+    51.65059 60.33728
 
-Another (slightly more complicated) way to transform `init.reg` is to
+* first argument is the target vector to which the function will be
+applied
+* second argument is the index variable that dictates by what
+factor the application of the function will be grouped
+* third argument is the function that will be used
+* fourth argument is a flag to tell `tapply` to ignore the missing
+values
+
+---
+
+Cross-tabulation with `tapply`
+==============================
+
+Multiple factors can be passed to `tapply` simultaneously, resulting in
+cross-tabulated output:
+
+    !r
+    > tapply(haart$weight, haart[c("male", "aids")], mean, na.rm=TRUE)
+        aids
+    male        0        1
+       0 53.95558 48.41616
+       1 63.11145 57.38151
+
+This can be further expanded to a 3-way cross-tabulation, if appropriate:
+
+    !r
+    > tapply(haart$weight, haart[c("male", "aids", "death")], mean, na.rm=TRUE)
+    , , death = 0
+
+        aids
+    male        0        1
+       0 54.18083 49.51265
+       1 64.80861 59.56368
+
+    , , death = 1
+
+        aids
+    male        0        1
+       0 50.43750 39.78671
+       1 52.57965 49.04523
+    
+
+---
+
+`lapply`
+========
+
+The `lapply` function, after applying the specified function, attempts to coerce output into a list.
+
+For example, if we want to take the means of several quantitative variables:
+
+    !r
+    > (haart_means <- lapply(haart[,4:6], mean, na.rm=T))
+    $cd4baseline
+    [1] 137.1859
+
+    $logvl
+    [1] 4.84446
+
+    $weight
+    [1] 57.00708
+
+    > haart_means$weight
+    [1] 57.00708
+
+This allows the results to be indexed by name.
+
+---
+
+`sapply`
+========
+
+`sapply` tries to return a simpler data structure, generally a vector. For
+example, we may simply want to quickly query which of our variables are numeric:
+
+    !r
+    > sapply(haart, is.numeric)
+            male          age         aids  cd4baseline        logvl       weight 
+            TRUE         TRUE         TRUE         TRUE         TRUE         TRUE 
+      hemoglobin      init.reg     init.date    last.visit        death    date.death 
+            TRUE        FALSE        FALSE        FALSE         TRUE        FALSE 
+    init.reg_list       gender 
+           FALSE        FALSE 
+
+Or, perhaps we are interested in standardizing some of the variables in
+our data frame:
+
+    !r
+    > sapply(haart[c("cd4baseline", "weight", "hemoglobin")], scale)[1:5,]
+         cd4baseline      weight  hemoglobin
+    [1,]          NA          NA          NA
+    [2,]  0.08539255  0.09425106 -0.06792736
+    [3,] -0.24968729 -0.72919671 -4.23067363
+    [4,] -0.20882389 -0.90096287          NA
+    [5,] -0.65832124          NA          NA
+
+
+   
+---
+
+Querying List Variables
+=======================
+
+Now, let's use one of these `apply` functions to query our variable containing the vectors of drugs. For example, we might want to know all the patients that have D4T
+as part of their regimens. 
+
+    !r
+    > d4t_index <- sapply(haart$init.reg_list, function(x) 'D4T' %in% x)
+    > haart_D4T <- haart[d4t_index, ]
+    > head(haart_D4T)
+       male      age aids cd4baseline    logvl weight hemoglobin     init.reg
+    5     1 27.00000    0          52 4.000000     NA         NA 3TC,D4T,EFV
+    16    0 43.00000    1          49       NA     NA    3.00000 3TC,D4T,NVP
+    18    1 33.85079    1           4       NA     64   12.00000 3TC,D4T,EFV
+    25    0 29.00000   NA          25 4.463878     44         NA 3TC,D4T,EFV
+    30    0 49.79877    1         207       NA     36   10.66667 3TC,D4T,EFV
+    38    0 37.00000    1          NA       NA     NA   12.80000 3TC,D4T,NVP
+       init.date last.visit death date.death  init.reg_list gender
+    5    9/1/04  11/13/07     0           3TC, D4T, EFV   male
+    16   6/7/04   6/12/04     1   6/12/04 3TC, D4T, NVP female
+    18 10/12/04   3/26/06     0           3TC, D4T, EFV   male
+    25  8/15/06   4/13/07     0           3TC, D4T, EFV female
+    30   3/5/04   2/13/06     0           3TC, D4T, EFV female
+    38   9/5/07  12/19/07     0           3TC, D4T, NVP female
+    
+The `%in%` operator, returns `TRUE` if the value on the left hand side of the
+operator is contained in the vector on the right hand side, or `FALSE` otherwise.
+
+---
+
+Creating Indicator Variables
+============================
+
+Another approach for transforming `init.reg` is to
 break it into multiple columns of indicators, which specify whether each
-drug is in that individual's regimen. The first step here is to obtain a
-unique list of all the drugs in all the regimens. Recall the function
-`unlist`, which takes all the list elements and concatenates them
+drug is in that individual's regimen. 
+
+The first lets create a unique list of all the drugs in all the regimens. Recall `unlist`, which takes all the list elements and concatenates them
 together. We can use this to get a non-unique vector of drugs:
 
-    > unlist(haart$init.reg.list)[1:25]
-     [1] "3TC" "AZT" "EFV" "3TC" "AZT" "EFV" "3TC" "AZT" "EFV" "3TC" "AZT" "NVP" "3TC" "D4T" "EFV" "3TC"
-    [17] "AZT" "NVP" "3TC" "AZT" "NVP" "3TC" "AZT" "EFV" "3TC"
-
+    !r
+    > unlist(haart$init.reg_list)
+       [1] "3TC" "AZT" "EFV" "3TC" "AZT" "EFV" "3TC" "AZT" "EFV" "3TC" "AZT" "NVP"
+      [13] "3TC" "D4T" "EFV" "3TC" "AZT" "NVP" "3TC" "AZT" "NVP" "3TC" "AZT" "EFV"
+      [25] "3TC" "ABC" "AZT" "3TC" "DDI" "NVP" "3TC" "AZT" "NVP" "3TC" "AZT" "IDV"
+      ...
+      [3073] "NVP" "3TC" "AZT" "NVP" "3TC" "D4T" "NVP"
+      
 Now, we use the function `unique` to extract the unique items within
 this vector, which comprises a list of all the drugs:
 
-    > (all_drugs <- unique(unlist(haart$init.reg.list)))
+    !r
+    > (all_drugs <- unique(unlist(haart$init.reg_list)))
      [1] "3TC"         "AZT"         "EFV"         "NVP"         "D4T"         "ABC"         "DDI"        
      [8] "IDV"         "LPV"         "RTV"         "SQV"         "FTC"         "TDF"         "DDC"        
     [15] "NFV"         "T20"         "ATV"         "FPV"         "TPV"         "DLV"         "HIDROXIUREA"
     [22] "APV"
 
+
+---
+
+Creating Indicator Variables
+============================
+
 Now that we have all the drugs, we want a logical vector for each drug
 that identifies its inclusion for each individual. We have already seen
 how to do this, for D4T:
 
-    > sapply(haart$init.reg.list, function(x) 'D4T' %in% x)[1:25]
-     [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-    [17] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+    !r
+    > sapply(haart$init.reg_list, function(x) 'D4T' %in% x)
+       [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+      [13] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+      ...
+      [997] FALSE FALSE FALSE  TRUE
+    
+Now we generalize this by writing a loop that performs this operation for each drug:
 
-What we need to do now is generalize this by writing a function that
-performs this operation for each drug in turn. This can be done in one
-line:
+    !r
+    for (drug in all_drugs) {
+        sapply(haart$init.reg_list, function(x) drug %in% x)
+    }
 
-    > for (drug in all_drugs) sapply(haart$init.reg.list, 
-    + function(x) drug %in% x)
+
+Presenter Notes
+===============
 
 Notice that when you run this function, nothing is returned. This is
 because we have not assigned the resulting vectors to variables, nor
-have we specified that they be printed to the screen. Lets turn them
-into a data frame of their own. We can use the function `cbind`, which
-stands for "column bind", concatenating vectors together column-wise.
-Lets create an empty vector to hold these, then include `cbind` in the
-loop, adding each logical vector as it is created:
+have we specified that they be printed to the screen.
+
+---
+
+Creating Indicator Variables
+============================
+
+The strategy is to create an empty vector, then to `cbind` (column-bind) successive indicator variables for each drug:
 
     > reg_drugs <- c()
-    > for (drug in all_drugs) reg_drugs <- cbind(reg_drugs,
-    + sapply(haart$init.reg.list, function(x) drug %in% x))
+    > for (drug in all_drugs) {
+    + reg_drugs <- cbind(reg_drugs,
+    + sapply(haart$init.reg_list, function(x) drug %in% x))
+    + }
     > head(reg_drugs)
          [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16]
     [1,] TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
@@ -527,22 +739,43 @@ loop, adding each logical vector as it is created:
     [5,] FALSE FALSE FALSE FALSE FALSE FALSE
     [6,] FALSE FALSE FALSE FALSE FALSE FALSE
 
-Turning this into a data frame is as simple as a call to `data.frame`,
-using `all_drugs` as a set of column labels:
-
-    > reg_drugs.df <- data.frame(reg_drugs)
-    > names(reg_drugs.df) <- all_drugs
-
-Of course, we really want these variables to be part of our full data
-set, so we can again use `cbind` to merge them into a single data frame:
-
-    > haart_merged <- cbind(haart, reg_drugs.df)
 
 ---
 
-Missing Values
-==============
+Creating Indicator Variables
+============================
 
+Turning this into a data frame is as simple as a call to `data.frame`,
+using `all_drugs` as a set of column labels:
+
+    > reg_drugs <- data.frame(reg_drugs)
+    > names(reg_drugs) <- all_drugs
+
+Now use `cbind` to merge the indicator variables with the original data frame:
+
+    > haart_merged <- cbind(haart, reg_drugs)
+    > head(haart_merged)
+      male age aids cd4baseline logvl  weight hemoglobin     init.reg init.date
+    1    1  25    0          NA    NA      NA         NA 3TC,AZT,EFV   7/1/03
+    2    1  49    0         143    NA 58.0608         11 3TC,AZT,EFV 11/23/04
+    3    1  42    1         102    NA 48.0816          1 3TC,AZT,EFV  4/30/03
+    4    0  33    0         107    NA 46.0000         NA 3TC,AZT,NVP  3/25/06
+    5    1  27    0          52     4      NA         NA 3TC,D4T,EFV   9/1/04
+    6    0  34    0         157    NA 54.8856         NA 3TC,AZT,NVP  12/2/03
+      last.visit death date.death  init.reg_list gender  3TC   AZT   EFV   NVP   D4T
+    1   2/26/07     0           3TC, AZT, EFV   male TRUE  TRUE  TRUE FALSE FALSE
+    2   2/22/08     0           3TC, AZT, EFV   male TRUE  TRUE  TRUE FALSE FALSE
+    3  11/21/05     1   1/11/06 3TC, AZT, EFV   male TRUE  TRUE  TRUE FALSE FALSE
+    4    5/5/06     1    5/7/06 3TC, AZT, NVP female TRUE  TRUE FALSE  TRUE FALSE
+    5  11/13/07     0           3TC, D4T, EFV   male TRUE FALSE  TRUE FALSE  TRUE
+    6   2/28/08     0           3TC, AZT, NVP female TRUE  TRUE FALSE  TRUE FALSE
+        ABC   DDI   IDV   LPV   RTV   SQV   FTC   TDF   DDC   NFV   T20   ATV   FPV
+    1 FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+    2 FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+    3 FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+    4 FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+    5 FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+    6 FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 
 
 ---
@@ -550,25 +783,183 @@ Missing Values
 Subsetting
 ==========
 
+Though you can manually extract subsets of a particular data frame by manually
+indexing rows, the `subset` function is a more convenient method for extensive
+subsetting.
+
+For example, we may want to select the endpoint event, weight and hemoglobin for
+just the male subjects over 30 years old. This is straightforward:
+
+    !r
+    > haart_m30 <- subset(haart, gender=="male" & age>30, select=c(death, weight, hemoglobin))
+    > head(haart_m30)
+       death  weight hemoglobin
+    2      0 58.0608   11.00000
+    3      1 48.0816    1.00000
+    8      0      NA         NA
+    9      0      NA         NA
+    11     1 57.0000   12.33333
+    12     0 48.0000         NA
+
+So, the first argument is the data frame of interest, the second argument are the
+subset conditions and the third is a vector of variables to be included in the
+resulting dataset.
+
 ---
 
-Merging Data Frames
-===================
+Missing Values
+==============
 
+Real-world data are rarely complete. Though analytic methods for dealing with missing values is outside the scope of this lecture, it is useful to know how to identify and remove records with missing values.
 
+The convenience function `complete.cases` returns a logical vector identifying which rows have no missing values across the entire sequence.
 
----
+    !r
+    > complete.cases(haart$weight)
+       [1] FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE
+      [13]  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+      ...
+      [997] FALSE  TRUE  TRUE  TRUE
+      
+Which is the equivalent of `!is.na(haart$weight)`. We can use this logical vector to extract all observations for which weight is present:
 
-Attaching Data Frames
-=====================
-
----
-
-The `apply` Functions
-=====================
+    !r
+    > head(haart[complete.cases(haart$weight),])
+       male      age aids cd4baseline logvl  weight hemoglobin     init.reg init.date
+    2     1 49.00000    0         143    NA 58.0608   11.00000 3TC,AZT,EFV 11/23/04
+    3     1 42.00000    1         102    NA 48.0816    1.00000 3TC,AZT,EFV  4/30/03
+    4     0 33.00000    0         107    NA 46.0000         NA 3TC,AZT,NVP  3/25/06
+    6     0 34.00000    0         157    NA 54.8856         NA 3TC,AZT,NVP  12/2/03
+    7     0 39.00000    0          65    NA 55.3392   11.00000 3TC,AZT,NVP   2/6/04
+    11    1 49.40726    1          NA    NA 57.0000   12.33333 3TC,AZT,NVP   1/7/02
+       last.visit death date.death  init.reg_list gender
+    2    2/22/08     0           3TC, AZT, EFV   male
+    3   11/21/05     1   1/11/06 3TC, AZT, EFV   male
+    4     5/5/06     1    5/7/06 3TC, AZT, NVP female
+    6    2/28/08     0           3TC, AZT, NVP female
+    7    3/11/08     0           3TC, AZT, NVP female
+    11   9/18/02     1   9/18/02 3TC, AZT, NVP   male
+    
 
 ---
 
 Sorting
 =======
 
+Though the `sort` function in R is the easiest way to sort the elements
+of a single vector, we are usually interested in sorting entire
+records/observations/rows according to the value of one or more
+parameters. In this case, it is a two-step process.
+
+First, we create a numeric vector of the indices of each row in our data
+frame, according to the order that we wish to have them. 
+
+    !r
+    > order(haart$init.date, haart$last.visit)
+       [1]  829   93  155  143  451  786  328  998  787  105  130  882  474  745
+      [15]  733  917  826  256   98  603  765  283  715  801  620  324  510  552
+    ...
+     [995]   91  229  866  388  287   22
+
+The `order` function generates indices of every row in the HAART database, sorted first by `init.date` and then by `last.visit`.
+
+---
+
+Sorting
+=======
+
+The second step is to use these index values to generate a sorted
+version of our data frame:
+
+    !r
+    > haart_sorted <- haart[order(haart$init.date, haart$last.visit),]
+    > head(haart_sorted)
+        male age aids cd4baseline logvl  weight hemoglobin     initreg initdate
+    829    1  19    0         216    NA 62.5000         NA 3TC,D4T,NFV   1/1/02
+    93     1  51    0          NA    NA      NA         NA 3TC,D4T,NVP   1/1/03
+    155    1  39    0          NA    NA 63.0000         NA 3TC,AZT,EFV   1/1/04
+    143    0  45    0          35    NA 48.5352         10 3TC,AZT,EFV  1/10/05
+    451    1  43    1          NA    NA      NA         NA 3TC,AZT,EFV  1/11/04
+    786    1  42    0         282    NA 66.2256         NA 3TC,AZT,EFV  1/11/05
+        lastvisit death datedeath  initreg_list gender
+    829   7/30/06     0           3TC, D4T, NFV   male
+    93    4/19/07     0           3TC, D4T, NVP   male
+    155   2/23/07     0           3TC, AZT, EFV   male
+    143   1/10/05     0           3TC, AZT, EFV female
+    451   7/10/06     0           3TC, AZT, EFV   male
+    786   2/27/08     0           3TC, AZT, EFV   male
+
+---
+
+Merging Data Frames
+===================
+
+We have seen how to combine data frames using `cbind` to add additional columns to an existing data frame. Similarly, data frames can be combined by row using `rbind`:
+
+    !r
+    > dim(rbind(haart[1:500,], haart[501:1000,]))
+    [1] 1000   14
+    
+This works, provided that the number of columns match:
+
+    !r
+    > dim(rbind(haart[1:500,], haart[501:1000,1:10]))
+    Error in rbind(deparse.level, ...) : 
+      numbers of columns of arguments do not match
+      
+In some situations, we may have information in one table that *partially* matches information in a second table. What if we want to integrate this information into a single data frame?
+
+---
+
+Merging Data Frames
+===================
+
+To combine data frames based on the values of common variables, we can use the built-in `merge` function. By default, `merge` joins rows of the data frames based on the values of the columns that the data frames have in common. 
+
+Let's look at a trivial example of two data frames with partial overlap in information:
+
+    !r
+    > df1 <- data.frame(a=c(1,2,4,5,6),x=c(9,12,14,21,8))
+    > df2 <- data.frame(a=c(1,3,4,6),y=c(8,14,19,2))
+    > merge(df1, df2)
+      a  x  y
+    1 1  9  8
+    2 4 14 19
+    3 6  8  2
+    
+Note that though there were 6 unique values for `a` among the two data frames, only those rows with values of `a` in both data frames are included in the merged data frame.
+
+---
+
+Merging Data Frames
+===================
+
+If we want to include all observations from both data frames, we can set the appropriate flag, which will result in missing values:
+
+    !r
+    > merge(df1, df2, all=TRUE)
+      a  x  y
+    1 1  9  8
+    2 2 12 NA
+    3 3 NA 14
+    4 4 14 19
+    5 5 21 NA
+    6 6  8  2
+    
+Or we may wish to include all records from just one of the two tables:
+
+    !r
+    > merge(df1, df2, all.x=TRUE)
+      a  x  y
+    1 1  9  8
+    2 2 12 NA
+    3 4 14 19
+    4 5 21 NA
+    5 6  8  2
+    > merge(df1, df2, all.y=TRUE)
+      a  x  y
+    1 1  9  8
+    2 3 NA 14
+    3 4 14 19
+    4 6  8  2
+    

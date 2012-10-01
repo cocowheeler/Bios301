@@ -1,6 +1,6 @@
 # Bios 301: Assignment 1 #
 
-*Due Friday, 1 October, 12:00 PM*
+*Due Monday, 1 October, 12:00 PM*
 
 50 points total.
 
