@@ -57,6 +57,7 @@ If we are writing a matrix or data frame to a file, it is more convenient to use
     "2" 32 -4 16
     "3" 48 -6 24
     
+<<<<<<< HEAD
 ---
 
 Exporting Data Frames
@@ -74,6 +75,8 @@ To write a CSV file for input to Excel:
 
     !r
     write.table(x, file = "foo.csv", sep = ",", col.names = NA)
+=======
+>>>>>>> 24b82631561a4345a8ebd312ad866b096486b54a
 
 ---
 
@@ -106,6 +109,28 @@ To write a CSV file for input to Excel:
     
 Note that `write.table` is inefficient for very large arrays; `write.matrix` is more memory-efficient.
 
+<<<<<<< HEAD
+=======
+---
+
+Exporting Data Frames
+=====================
+
+There are additional considerations when storing a data frame as a text file:
+
+* precision of `numeric` values
+* header information
+* column separator
+* missing values
+* quoting strings
+
+To write a CSV file for input to Excel:
+
+    !r
+    write.table(x, file = "foo.csv", sep = ",", col.names = NA)
+
+
+>>>>>>> 24b82631561a4345a8ebd312ad866b096486b54a
 
 ---
 
@@ -166,6 +191,10 @@ To read a comma-separated values (csv) file back into R:
 
 Due to the frequency with which they are used, there are several helper functions that call `read.table` to import several common file types:
 
+<<<<<<< HEAD
+=======
+    !r 
+>>>>>>> 24b82631561a4345a8ebd312ad866b096486b54a
     read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".", 
         fill = TRUE, ...)
     
@@ -177,7 +206,10 @@ Due to the frequency with which they are used, there are several helper function
     
     read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",", 
         fill = TRUE, ...)
+<<<<<<< HEAD
     
+=======
+>>>>>>> 24b82631561a4345a8ebd312ad866b096486b54a
         
 ---
    
@@ -244,6 +276,10 @@ The `what` argument can be a list of modes for the variables in the file.
 `scan` can also be used for rudimentary data entry:
 
     !r
+<<<<<<< HEAD
+=======
+    !r
+>>>>>>> 24b82631561a4345a8ebd312ad866b096486b54a
     > x <- scan()
     1: 4
     2: 7 3
@@ -315,7 +351,11 @@ Every R object can be stored into and restored from a file with the commands `sa
     > save(x,file="x.Rdata") # encode
     > rm(x)
     > load("x.Rdata") # decode
+<<<<<<< HEAD
     > x
+=======
+    >x
+>>>>>>> 24b82631561a4345a8ebd312ad866b096486b54a
     [1] 1 2 3 4
 
 At the end of a session the objects in the global environment are usually kept in a single binary file in the working directory called .RData. By default, this is loaded to the next session, but can also be loaded manually with `load`.
@@ -332,6 +372,7 @@ The package `foreign` provides import facilities for files produced by:
 * **SAS** read.xport,read.ssd
 * **SPSS** read.spss
 
+<<<<<<< HEAD
 and export and import facilities for Stata (`read.dta`, `write.dta`).
 
 ---
@@ -387,3 +428,6 @@ R Code
         }   
         return(tot)
     }
+=======
+and export and import facilities for Stata (`read.dta`, `write.dta`).
+>>>>>>> 24b82631561a4345a8ebd312ad866b096486b54a
